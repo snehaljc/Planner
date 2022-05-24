@@ -1,0 +1,98 @@
+package com.planner.app;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.planner.dao.LoginDao;
+import com.planner.dao.RegisterDao;
+import com.planner.model.LoginBean;
+import com.planner.model.RegisterBean;
+
+@WebServlet("/login")
+public class LoginController extends HttpServlet{
+
+	private static final long serialVersionUID = 1L;
+	
+	private LoginDao loginDao;
+	private RegisterDao registerDao;
+
+	public void init() {
+		loginDao = new LoginDao();
+		registerDao = new RegisterDao();
+	}
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		super.doGet(req, resp);
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		String action = req.getParameter("pageName");
+		switch(action) {
+		case "register":
+			register(req, resp);
+		break;
+		case "login":
+			authenticate(req, resp);
+		break;
+		}
+	}
+	
+	private void authenticate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		LoginBean loginBean = new LoginBean();
+		loginBean.setUsername(username);
+		loginBean.setPassword(password);
+
+		try {
+			if (loginDao.validate(loginBean)) {
+				RequestDispatcher dispatcher = request.getRequestDispatcher("components/dashboard/dashboard.jsp");
+				HttpSession session = request.getSession();
+				session.setAttribute("user", username);
+				dispatcher.forward(request, response);
+			} else {
+				RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+				request.getSession().setAttribute("toast", "Email or password is incorrect");
+				dispatcher.forward(request, response);
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	private void register(HttpServletRequest request, HttpServletResponse response)  throws IOException, ServletException {
+		RegisterBean rb = new RegisterBean();
+		rb.setEmail(request.getParameter("email"));
+		rb.setFname("testname");
+		rb.setLname(request.getParameter("lname"));
+		rb.setPassword(request.getParameter("password"));
+		
+		try {
+			int result = registerDao.RegisterUser(rb);
+			if(result == 1) {
+				request.setAttribute("NOTIFICATION", "User Registered Successfully!");
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			response.sendRedirect("index.jsp");
+			e.printStackTrace();
+		}
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("components/dashboard/dashboard.jsp");
+		dispatcher.forward(request, response);
+	}
+	
+}

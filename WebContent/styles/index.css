@@ -1,0 +1,57 @@
+.icon-md {
+  font-size: 25px;
+}
+
+.icon-white {
+  color: white;
+}
+
+.form-login {
+  border-radius: 10px;
+  margin: 50px auto;
+  padding: 30px 40px;
+  box-shadow: 20px 20px 80px rgb(206, 206, 206);
+}
+.form-register {
+  border-radius: 10px;
+  margin: 50px auto;
+  padding: 30px 40px;
+  box-shadow: 20px 20px 80px rgb(206, 206, 206);
+}
+.form-login > h3 {
+  text-align: center;
+}
+.form-register > h3 {
+  text-align: center;
+}
+.branding {
+  text-align: center;
+}
+.branding > img {
+  height: 150px;
+  width: 150px;
+}
+
+.brand-graphic > img {
+  height: 500px;
+  width: 500px;
+}
+
+.log-in-toggle {
+  all: unset;
+  color: blue;
+}
+
+.float-right {
+  float: right;
+}
+
+a.nostyle:link {
+  text-decoration: inherit;
+  color: inherit;
+}
+
+a.nostyle:visited {
+  text-decoration: inherit;
+  color: inherit;
+}
