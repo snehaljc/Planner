@@ -10,25 +10,28 @@ import com.planner.utils.JDBCUtils;
 
 public class LoginDao {
 
-	public boolean validate(LoginBean loginBean) throws ClassNotFoundException {
-		boolean status = false;
+	public int validate(LoginBean loginBean) throws ClassNotFoundException {
+		int id = 0;
 
 		Class.forName("com.mysql.jdbc.Driver");
 
 		try (Connection connection = JDBCUtils.getConnection();
 				PreparedStatement preparedStatement = connection
-						.prepareStatement("select * from users where email = ? and pwd = ? ")) {
+						.prepareStatement("select * from Users where Email = ? and Pwd = ? ")) {
 			preparedStatement.setString(1, loginBean.getUsername());
 			preparedStatement.setString(2, loginBean.getPassword());
 
 			System.out.println(preparedStatement);
 			ResultSet rs = preparedStatement.executeQuery();
-			status = rs.next();
+			
+			if(rs.next()) {
+				id = rs.getInt("id");
+			}
 
 		} catch (SQLException e) {
 			// process sql exception
 			JDBCUtils.printSQLException(e);
 		}
-		return status;
+		return id;
 	}
 }

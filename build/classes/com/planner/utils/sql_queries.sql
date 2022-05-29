@@ -1,16 +1,43 @@
 -- Create database
 CREATE DATABASE plannerdb;
 
--- Use created database
+-- CREATE DATABASE plannerdb
 USE plannerdb;
 
--- Create table for users
-create table users (
+create table Users (
  id int NOT NULL AUTO_INCREMENT,
- fname varchar(120) NOT NULL,
- lname varchar(120) NOT NULL,
- email varchar(220) NOT NULL,
- pwd varchar(220) NOT NULL,
+ Fname varchar(120) NOT NULL,
+ Lname varchar(120) NOT NULL,
+ Email varchar(220) NOT NULL,
+ Pwd varchar(220) NOT NULL,
  PRIMARY KEY (id)
 );
+
+create table Locations (
+ id int NOT NULL AUTO_INCREMENT,
+ City varchar(100) NOT NULL,
+ Area varchar(100) NOT NULL,
+ PRIMARY KEY (id)
+);
+
+CREATE TABLE Events (
+    id INT NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(200) NOT NULL,
+    LocationId INT NOT NULL,
+    CreatedBy INT NOT NULL,
+    Address VARCHAR(400) NOT NULL,
+    Date DATE NOT NULL,
+    Time DATETIME NOT NULL,
+    Description VARCHAR(800) NOT NULL,
+    Fee INT NULL,
+    Public BOOL DEFAULT TRUE,
+    CreatedOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    LastModifiedOn DATETIME NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_LocationId FOREIGN KEY (LocationId)
+        REFERENCES Locations (id),
+    CONSTRAINT FK_UserId FOREIGN KEY (CreatedBy)
+        REFERENCES users (id)
+);
+
 

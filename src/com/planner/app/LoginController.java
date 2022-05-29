@@ -10,11 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.planner.dao.DashDao;
 import com.planner.dao.LoginDao;
 import com.planner.dao.RegisterDao;
 import com.planner.model.LoginBean;
 import com.planner.model.RegisterBean;
-
+import com.planner.model.*;
 @WebServlet("/login")
 public class LoginController extends HttpServlet{
 
@@ -22,10 +23,12 @@ public class LoginController extends HttpServlet{
 	
 	private LoginDao loginDao;
 	private RegisterDao registerDao;
+	private DashDao dashDao;
 
 	public void init() {
 		loginDao = new LoginDao();
 		registerDao = new RegisterDao();
+		dashDao = new DashDao();
 	}
 
 	@Override
@@ -56,10 +59,11 @@ public class LoginController extends HttpServlet{
 		loginBean.setPassword(password);
 
 		try {
-			if (loginDao.validate(loginBean)) {
-				RequestDispatcher dispatcher = request.getRequestDispatcher("components/dashboard/dashboard.jsp");
+			int id = loginDao.validate(loginBean);
+			if (id != 0) {
 				HttpSession session = request.getSession();
-				session.setAttribute("user", username);
+				session.setAttribute("dashEvents", dashDao.getAllDashboardEventsByUser(id));
+				RequestDispatcher dispatcher = request.getRequestDispatcher("components/dashboard/dashboard.jsp");
 				dispatcher.forward(request, response);
 			} else {
 				RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");

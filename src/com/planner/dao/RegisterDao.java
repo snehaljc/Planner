@@ -13,7 +13,7 @@ public class RegisterDao {
 		int result = 0;
 		try (Connection connection = JDBCUtils.getConnection();
 				PreparedStatement preparedStatement = connection
-						.prepareStatement("insert into users (fname, lname, email, pwd) values (?, ?, ?, ?);")) {
+						.prepareStatement("insert into Users (Fname, Lname, Email, Pwd) values (?, ?, ?, ?);")) {
 			preparedStatement.setString(1, registerBean.getFname());
 			preparedStatement.setString(2, registerBean.getLname());
 			preparedStatement.setString(3, registerBean.getEmail());
