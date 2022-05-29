@@ -71,6 +71,9 @@ public class LoginController extends HttpServlet{
 				dispatcher.forward(request, response);
 			}
 		} catch (ClassNotFoundException e) {
+			request.getSession().setAttribute("toast", "Something went wrong, please check server logs");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+			dispatcher.forward(request, response);
 			e.printStackTrace();
 		}
 
@@ -79,24 +82,34 @@ public class LoginController extends HttpServlet{
 	private void register(HttpServletRequest request, HttpServletResponse response)  throws IOException, ServletException {
 		RegisterBean rb = new RegisterBean();
 		rb.setEmail(request.getParameter("email"));
-		rb.setFname("testname");
+		rb.setFname(request.getParameter("fname"));
 		rb.setLname(request.getParameter("lname"));
 		rb.setPassword(request.getParameter("password"));
 		
 		try {
 			int result = registerDao.RegisterUser(rb);
 			if(result == 1) {
-				request.setAttribute("NOTIFICATION", "User Registered Successfully!");
+				request.getSession().setAttribute("toast", "User Registered Successfully!");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("components/dashboard/dashboard.jsp");
+				dispatcher.forward(request, response);
+			} else if(result == 2) {
+				request.getSession().setAttribute("toast", "User already exists! Try with another email");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+				dispatcher.forward(request, response);
+			} else {
+				request.getSession().setAttribute("toast", "Something went wrong, please check server logs");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+				dispatcher.forward(request, response);
 			}
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			response.sendRedirect("index.jsp");
+			request.getSession().setAttribute("toast", "Something went wrong, please check server logs");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+			dispatcher.forward(request, response);
 			e.printStackTrace();
 		}
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("components/dashboard/dashboard.jsp");
-		dispatcher.forward(request, response);
 	}
 	
 }

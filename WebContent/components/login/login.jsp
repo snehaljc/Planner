@@ -13,8 +13,11 @@
             <img src="assets/images/planner-sm.png" alt="Brand image" />
           </div>
  <c:if test="${not empty toast}">
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
   				${toast}
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
 		</div>
 		</c:if>
           <div class="form-login" id="login">
