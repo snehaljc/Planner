@@ -40,4 +40,15 @@ CREATE TABLE Events (
         REFERENCES users (id)
 );
 
+CREATE TABLE EventInvites (
+    id INT NOT NULL AUTO_INCREMENT,
+    EventId int NOT NULL,
+    UserId INT NOT NULL,
+    Accepted BOOL DEFAULT FALSE,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_EventId FOREIGN KEY (EventId)
+        REFERENCES Events (id),
+    CONSTRAINT FK_UserIdForInvites FOREIGN KEY (UserId)
+        REFERENCES users (id)
+);
 

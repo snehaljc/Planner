@@ -8,6 +8,25 @@
   <body>
   
 	<jsp:include page="/components/common/navbar.jsp"></jsp:include>
+	      <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Delete event</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+			Do you want to delete this event? This action is irreversible. 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a href type="button" class="btn btn-danger action">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
 	    <div class="container mt-3">
       <!-- My Events header stuff -->
       <div class="row">
@@ -15,7 +34,7 @@
           <h2>My Events</h2>
         </div>
         <div class="col-2 my-auto">
-          <a href="events.html" class="btn btn-primary btn-sm">New Event</a>
+          <a href="components/events/events.jsp" class="btn btn-primary btn-sm">New Event</a>
         </div>
         <div class="col-3 offset-5">
           <div class="input-group my-auto mt-1">
@@ -30,6 +49,7 @@
       </div>
       <!-- My events cards panel -->
       <div class="container-fluid">
+
       <div class="row row-cols-3">
       <c:forEach var="event" items="${dashEvents}">
         <div class="col mt-4">
@@ -40,8 +60,8 @@
               <h5 class="card-title"><c:out value="${event.name}" /></h5>
               <h6 class="card-subtitle mb-2 text-muted"><c:out value="${event.city}" /></h6>
               <p class="card-text mb-3"><c:out value="${event.description}" /></p>
-              <a href="#" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Edit Event"><i class="bi bi-pen"></i></a>
-              <a href="#" class="btn btn-danger"  data-toggle="tooltip" data-placement="top" title="Delete Event"><i class="bi bi-trash3"></i></a>
+              <buttton class="btn btn-primary" title="Edit Event"><i class="bi bi-pen"></i></buttton>
+              <button class="btn btn-danger" title="Delete Event" data-toggle="modal" data-target="#deleteModal" data-eventid=<c:out value="${event.eventId}" />><i class="bi bi-trash3"></i></button>
               <a href="#" class="btn btn-outline-secondary float-right"  data-toggle="tooltip" data-placement="top" title="Share Event"><i class="bi bi-share"></i></a>
             </div>
           </div>

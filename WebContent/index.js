@@ -42,4 +42,10 @@ $('document').ready(function() {
     }
   })
 
+
+ $('#deleteModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var eventid = button.data('eventid'); // Extract info from data-* attributes
+   $('a.action').attr("href","dashboard?action=delete&id="+eventid);
+  });
   
