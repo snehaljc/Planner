@@ -14,8 +14,8 @@ import com.planner.dao.DashDao;
 import com.planner.dao.LoginDao;
 import com.planner.dao.RegisterDao;
 import com.planner.model.LoginBean;
+import com.planner.model.LoginRespBean;
 import com.planner.model.RegisterBean;
-import com.planner.model.*;
 @WebServlet("/login")
 public class LoginController extends HttpServlet{
 
@@ -59,10 +59,13 @@ public class LoginController extends HttpServlet{
 		loginBean.setPassword(password);
 
 		try {
-			int id = loginDao.validate(loginBean);
-			if (id != 0) {
+			LoginRespBean resp = loginDao.validate(loginBean);
+			if (resp != null) {
 				HttpSession session = request.getSession();
-				session.setAttribute("dashEvents", dashDao.getAllDashboardEventsByUser(id));
+				session.setAttribute("dashEvents", dashDao.getAllDashboardEventsByUser(resp.getUserId()));
+				session.setAttribute("user", resp.getUserName());
+				session.setAttribute("userid", resp.getUserId());
+				session.setAttribute("toast", null);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("components/dashboard/dashboard.jsp");
 				dispatcher.forward(request, response);
 			} else {
@@ -89,8 +92,8 @@ public class LoginController extends HttpServlet{
 		try {
 			int result = registerDao.RegisterUser(rb);
 			if(result == 1) {
-				request.getSession().setAttribute("toast", "User Registered Successfully!");
-				RequestDispatcher dispatcher = request.getRequestDispatcher("components/dashboard/dashboard.jsp");
+				request.getSession().setAttribute("toast", "User Registered Successfully! Login with the created user");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 				dispatcher.forward(request, response);
 			} else if(result == 2) {
 				request.getSession().setAttribute("toast", "User already exists! Try with another email");

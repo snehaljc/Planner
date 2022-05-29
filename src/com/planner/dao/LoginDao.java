@@ -4,15 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.planner.model.LoginBean;
+import com.planner.model.LoginRespBean;
 import com.planner.utils.JDBCUtils;
 
 public class LoginDao {
 
-	public int validate(LoginBean loginBean) throws ClassNotFoundException {
-		int id = 0;
-
+	public LoginRespBean validate(LoginBean loginBean) throws ClassNotFoundException {
+		LoginRespBean resp = null;
 		Class.forName("com.mysql.jdbc.Driver");
 
 		try (Connection connection = JDBCUtils.getConnection();
@@ -25,13 +26,13 @@ public class LoginDao {
 			ResultSet rs = preparedStatement.executeQuery();
 			
 			if(rs.next()) {
-				id = rs.getInt("id");
+				resp = new LoginRespBean(rs.getInt("id"), rs.getString("Fname"));
 			}
 
 		} catch (SQLException e) {
 			// process sql exception
 			JDBCUtils.printSQLException(e);
 		}
-		return id;
+		return resp;
 	}
 }

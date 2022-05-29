@@ -36,7 +36,7 @@
               data-toggle="dropdown"
               aria-expanded="false"
             >
-              Username
+             ${user}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#">Logout</a>
