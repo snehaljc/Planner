@@ -1,13 +1,27 @@
 package com.planner.model;
 
 public class DashEventsBean {
-	private String name;
+	private String name, image;
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
 	private String city;
 	private String description;
 	private int eventId;
 	public DashEventsBean(String name, String city, String description, int eventId) {
 		super();
 		this.name = name;
+		this.city = city;
+		this.description = description;
+		this.eventId = eventId;
+	}
+	public DashEventsBean(String name, String image, String city, String description, int eventId) {
+		super();
+		this.name = name;
+		this.image = image;
 		this.city = city;
 		this.description = description;
 		this.eventId = eventId;

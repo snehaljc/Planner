@@ -30,11 +30,27 @@
 	    <div class="container mt-3">
       <!-- My Events header stuff -->
       <div class="row">
+      <c:if test="${not empty toastSuccess}">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+  				${toastSuccess}
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    		<span aria-hidden="true">&times;</span>
+  		</button>
+		</div>
+	</c:if>
+	<c:if test="${not empty toast}">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+  				${toast}
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    		<span aria-hidden="true">&times;</span>
+  		</button>
+		</div>
+	</c:if>
         <div class="col-2 my-auto">
           <h2>My Events</h2>
         </div>
         <div class="col-2 my-auto">
-          <a href="components/events/events.jsp" class="btn btn-primary btn-sm">New Event</a>
+          <a href="<%=request.getContextPath()%>/events?action=newevent" class="btn btn-primary btn-sm">New Event</a>
         </div>
         <div class="col-3 offset-5">
           <div class="input-group my-auto mt-1">
@@ -55,7 +71,15 @@
         <div class="col mt-4">
           <a href="#" class="nostyle">
           <div class="card" style="width: 18rem;">
-            <img src="assets/images/undraw_events_re_98ue.svg" class="card-img-top" alt="...">
+          <c:choose>
+    		<c:when test="${empty event.image}">
+				<img src="assets/images/undraw_events_re_98ue.svg" class="card-img-top" alt="...">
+    		</c:when>    
+    		<c:otherwise>
+				<img src="data:image/jpg;base64,${event.image}" class="card-img-top" alt="...">
+    		</c:otherwise>
+		  </c:choose>
+            
             <div class="card-body">
               <h5 class="card-title"><c:out value="${event.name}" /></h5>
               <h6 class="card-subtitle mb-2 text-muted"><c:out value="${event.city}" /></h6>

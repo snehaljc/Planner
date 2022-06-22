@@ -31,6 +31,8 @@ $('document').ready(function() {
       });
     $('.add_user').click(function() {
         $("#addedusertable").append('<tr><td>'+$('#eventinvite').val()+'</td><td><button class="btn add_user" type="button" id="removeuser" ><i class="bi bi-trash3"></i></button></td></tr>');
+        let userlist = $("#invitationlist").val() ? $("#invitationlist").val() +','+ $('#eventinvite').val() : $('#eventinvite').val();
+        $('#invitationlist').attr('value', userlist);
      });
 
      $("#addedusertable").on('click', '#removeuser', function () {
@@ -48,4 +50,12 @@ $('document').ready(function() {
     var eventid = button.data('eventid'); // Extract info from data-* attributes
    $('a.action').attr("href","dashboard?action=delete&id="+eventid);
   });
+  
+  $('#eventimage').on('change',function(){
+                //get the file name
+                var fileName = $(this).val();
+                //replace the "Choose a file" label
+                $(this).next('.custom-file-label').html(fileName);
+            })
+            
   
