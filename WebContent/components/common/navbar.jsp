@@ -23,7 +23,10 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">My Events</a>
+            <a class="nav-link" href="<%=request.getContextPath()%>/dashboard?action=alleve">My Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<%=request.getContextPath()%>/invites">Invitations</a>
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">
@@ -39,7 +42,7 @@
              ${user}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Logout</a>
+              <a class="dropdown-item" href="<%=request.getContextPath()%>/login?action=logout">Logout</a>
             </div>
           </li>
           <li class="nav-item ml-3">

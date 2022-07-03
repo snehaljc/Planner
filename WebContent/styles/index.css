@@ -6,6 +6,14 @@
   color: white;
 }
 
+.icon-green {
+  color: green;
+}
+
+.icon-red {
+  color: red;
+}
+
 .form-login {
   border-radius: 10px;
   margin: 50px auto;
@@ -54,4 +62,8 @@ a.nostyle:link {
 a.nostyle:visited {
   text-decoration: inherit;
   color: inherit;
+}
+
+.view-event-lable-value {
+  overflow-wrap: break-word;
 }

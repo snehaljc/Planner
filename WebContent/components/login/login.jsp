@@ -12,14 +12,7 @@
           <div class="branding mt-3">
             <img src="assets/images/planner-sm.png" alt="Brand image" />
           </div>
- <c:if test="${not empty toast}">
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-  				${toast}
-  		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-		</div>
-		</c:if>
+<jsp:include page="/components/common/toast.jsp"></jsp:include>
           <div class="form-login" id="login">
             <h3>Sign In</h3>
             <form action="<%=request.getContextPath()%>/login" method="post">

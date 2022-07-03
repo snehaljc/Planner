@@ -2,7 +2,7 @@ function toggleLoginSignup() {
     const login = document.getElementById('login');
     const loginState = login.style.display;
     const register = document.getElementById('register');
-    console.log("Im on bitvh");
+
     if (loginState == 'block') {
         login.style.display = 'none';
         register.style.display = 'block';
@@ -11,6 +11,8 @@ function toggleLoginSignup() {
         login.style.display = 'block';
     }
 }
+let dateid = document.getElementsByName("eventdate")[0];
+if(dateid) document.getElementsByName("eventdate")[0].min = new Date().toISOString().slice(0, 16);
 
 $('#flexdatalist').flexdatalist({
     minLength: 1,
@@ -56,6 +58,48 @@ $('document').ready(function() {
                 var fileName = $(this).val();
                 //replace the "Choose a file" label
                 $(this).next('.custom-file-label').html(fileName);
-            })
+            });
             
   
+  function clearToast() {
+    $.ajax({
+        url: '/Planner/api?action=cleartoast',
+        type: "GET", 
+        error : function(){ 
+            console.log('Error in the AJAX call of clearing toast'); 
+        },
+        success: function(msg){      
+                console.log(msg);
+        }
+})
+}
+
+function clearToastSuccess() {
+    $.ajax({
+        url: '/Planner/api?action=cleartoastsuccess',
+        type: "GET", 
+        error : function(){ 
+            console.log('Error in the AJAX call of clearing toast'); 
+        },
+        success: function(msg){      
+                console.log(msg);
+        }
+})
+}
+
+function updateNearByEvents(item) {
+	let value = item.value;
+    $.ajax({
+        url: '/Planner/dashboard?action=nearby&lid='+value,
+        type: "GET", 
+        error : function(){ 
+            console.log('Error in the AJAX call of clearing toast'); 
+        },
+        success: function(msg){      
+                console.log(msg);
+        }
+})
+}
+
+
+ 

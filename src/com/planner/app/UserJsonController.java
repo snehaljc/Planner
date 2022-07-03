@@ -21,7 +21,7 @@ public class UserJsonController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
 		eventsDao evt = new eventsDao();
-		String json = new Gson().toJson(evt.getAllLocations());
+		String json = new Gson().toJson(evt.getAllUsersForJson());
 	    response.setContentType("application/json");
 	    response.setCharacterEncoding("UTF-8");
 	    response.getWriter().write(json);

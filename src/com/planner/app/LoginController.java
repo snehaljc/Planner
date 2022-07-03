@@ -1,6 +1,7 @@
 package com.planner.app;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import com.planner.dao.DashDao;
 import com.planner.dao.LoginDao;
 import com.planner.dao.RegisterDao;
+import com.planner.dao.eventsDao;
 import com.planner.model.LoginBean;
 import com.planner.model.LoginRespBean;
 import com.planner.model.RegisterBean;
@@ -24,17 +26,22 @@ public class LoginController extends HttpServlet{
 	private LoginDao loginDao;
 	private RegisterDao registerDao;
 	private DashDao dashDao;
-
+	private eventsDao eveDao;
 	public void init() {
 		loginDao = new LoginDao();
 		registerDao = new RegisterDao();
 		dashDao = new DashDao();
+		eveDao =  new eventsDao();
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		super.doGet(req, resp);
+		String action = req.getParameter("action");
+		if(action.equals("logout")) {
+			req.getSession().invalidate();
+			resp.sendRedirect("index.jsp");
+		}
 	}
 	
 	@Override
@@ -62,6 +69,10 @@ public class LoginController extends HttpServlet{
 			LoginRespBean resp = loginDao.validate(loginBean);
 			if (resp != null) {
 				HttpSession session = request.getSession();
+				
+				HashMap<Integer, String> alllocs =eveDao.getAllLocations();
+				session.setAttribute("allLocations", alllocs);
+				session.setAttribute("nearbyevents", dashDao.getAllNearByEventsByLocation(resp.getUserId(), alllocs.keySet().stream().findFirst().get()));
 				session.setAttribute("dashEvents", dashDao.getAllDashboardEventsByUser(resp.getUserId()));
 				session.setAttribute("user", resp.getUserName());
 				session.setAttribute("userid", resp.getUserId());
@@ -92,7 +103,7 @@ public class LoginController extends HttpServlet{
 		try {
 			int result = registerDao.RegisterUser(rb);
 			if(result == 1) {
-				request.getSession().setAttribute("toast", "User Registered Successfully! Login with the created user");
+				request.getSession().setAttribute("toastSuccess", "User Registered Successfully! Login with the created user");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 				dispatcher.forward(request, response);
 			} else if(result == 2) {

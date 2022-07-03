@@ -47,8 +47,8 @@ CREATE TABLE EventInvites (
     Accepted BOOL DEFAULT FALSE,
     PRIMARY KEY (id),
     CONSTRAINT FK_EventId FOREIGN KEY (EventId)
-        REFERENCES Events (id),
+        REFERENCES Events (id) ON DELETE CASCADE,
     CONSTRAINT FK_UserIdForInvites FOREIGN KEY (UserId)
-        REFERENCES users (id)
+        REFERENCES users (id) ON DELETE CASCADE
 );
 

@@ -1,5 +1,5 @@
     <script
-      src="/Planner/assets/bootstrap/jquery-3.6.0.slim.min.js"
+      src="/Planner/assets/bootstrap/jquery-3.6.0.min.js"
       crossorigin="anonymous"
     ></script>
     <script

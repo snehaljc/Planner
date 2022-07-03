@@ -4,23 +4,42 @@ import java.util.Date;
 import java.util.List;
 
 public class EventsBean {
-	private String name, address, description, image;
+	private String name, address, description, image, location;
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
 	private Integer fee, createdBy, city;
 	private List<String> invitedusers;
+	private Date createdOn, modifiedOn;
+	private Date datetime;
+	private Boolean ispublic;
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
+	}
+	public Date getModifiedOn() {
+		return modifiedOn;
+	}
+	public void setModifiedOn(Date modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
 	public Integer getCreatedBy() {
 		return createdBy;
 	}
 	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
-	private Boolean ispublic;
 	public List<String> getInvitedusers() {
 		return invitedusers;
 	}
 	public void setInvitedusers(List<String> invitedusers) {
 		this.invitedusers = invitedusers;
 	}
-	private Date datetime;
 	public String getName() {
 		return name;
 	}
